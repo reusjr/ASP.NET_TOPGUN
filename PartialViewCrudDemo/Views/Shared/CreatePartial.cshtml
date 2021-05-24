@@ -1,0 +1,41 @@
+﻿
+@model PartialViewCrudDemo.Models.tblStudent
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { name = "myForm" }))
+    {
+        <form id="myForm">
+            @Html.ValidationSummary(true)
+            <h3>Add Student</h3>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.StudentName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.StudentName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StudentName)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Class)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Class, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Class)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Course)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Course, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Course)
+            </div>
+            <p>
+                <input type="submit" value="Save" class="btn btn-primary" onclick="AddData();" />
+            </p>
+        </form>
+    }
+</body>
+</html>
