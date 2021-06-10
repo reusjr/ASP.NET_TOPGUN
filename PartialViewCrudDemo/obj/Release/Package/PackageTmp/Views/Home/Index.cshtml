@@ -1,0 +1,109 @@
+﻿@model IEnumerable<PartialViewCrudDemo.Models.tblStudent>
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="container">
+    <h2>Record</h2>
+    <input type="button" class="btn btn-primary" id="addData" value="Add" onclick="GetAddData();" />
+    <br /><br />
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th style="display:none;">
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course)s
+            </th>
+            <th>Action</th>
+        </tr>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td style="display:none;">
+                    @Html.DisplayFor(modelItem => i.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => i.StudentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => i.Class)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => i.Course)
+                </td>
+                <td>
+                    <a class="btn btn-info btn-sm" id="@i.ID" onclick="GetbyID(this.id)">Edit</a>
+                    <a class="btn btn-danger btn-sm" id="@i.ID" onclick="GetbyDelID(this.id)"> Delete </a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"> Student Data</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script>
+        function GetAddData() {
+            $.get("@Url.Action("MyCreatePartial", "Home")",
+                function (data) {
+                    $('.modal-body').html(data);
+                });
+            $("#myModal").modal("show");
+        }
+        function AddData() {
+            $.post("@Url.Action("MyCreatePartial", "Home")",
+                function (data) {
+                    $('.modal-body').html(data);
+                });
+                $("#myModal").modal("show");
+        }
+        function GetbyID(ID) {
+              $.get("@Url.Action("GetByID", "Home")/" + ID,
+                function (data) {
+                    $('.modal-body').html(data);
+                });
+                $("#myModal").modal("show");
+        }
+        function GetbyDelID(ID) {
+              $.get("@Url.Action("GetByDeleteID", "Home")/" + ID,
+                function (data) {
+                    $('.modal-body').html(data);
+                });
+                $("#myModal").modal("show");
+        }
+        function EditData() {
+             $.post("@Url.Action("MyEditPartial", "Home")",
+                function (data) {
+                    $('.modal-body').html(data);
+                });
+                $("#myModal").modal("show");
+        }
+        function Delete(ID) {
+            $.post("@Url.Action("MyDeletePartial", "Home")/" + ID,
+                function (data) {
+                   $('.modal-body').html(data);
+                });
+            $("#myModal").modal("show");
+        }
+    </script>
+}

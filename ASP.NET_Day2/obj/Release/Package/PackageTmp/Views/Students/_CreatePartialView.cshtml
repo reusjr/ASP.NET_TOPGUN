@@ -1,0 +1,63 @@
+﻿@model ASP.NET_Day2.Models.Student
+
+<h2>Create Student</h2>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "myForm" }))
+{
+    <form id="myForm">
+        @Html.ValidationSummary(true)
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.LastName)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FirstMidName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.FirstMidName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FirstMidName)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EnrollmentDate)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.EnrollmentDate, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.EnrollmentDate)
+        </div>
+        <p>
+            <input type="submit" value="Save" class="btn btn-primary" id="btnSubmit" />
+        </p>
+    </form>
+}
+
+<script>
+    $(document).ready(function () {
+        $('#myForm').validate({
+            rules: {
+                'LastName': 'required',
+                'FirstMidName': 'required',
+                'EnrollmentDate': {
+                    required: true,
+                    date: true,
+                    dateFormat: true
+                }
+            },
+            messages: {
+                'LastName': 'This field is required',
+                'FirstMidName': 'This field is required',
+                'EnrollmentDate': {
+                    required: 'This field is required',
+                    date: 'Input for format date',
+                    dateFormat: 'Input for format date'
+                }
+            },
+            submitHandler: function (form) {
+                $("#btnSubmit").click(function () {
+                    AddData();
+                });
+            },
+        });
+    });
+</script>

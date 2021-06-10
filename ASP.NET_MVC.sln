@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP.NET_Day2", "ASP.NET_Day
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP.NET_DAY2_CF", "ASP.NET_DAY2_CF\ASP.NET_DAY2_CF.csproj", "{728EC432-EB64-4902-B9FE-FEF5695DE31B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{2AABE925-B962-44A8-9C22-5661CFDF3739}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{728EC432-EB64-4902-B9FE-FEF5695DE31B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{728EC432-EB64-4902-B9FE-FEF5695DE31B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{728EC432-EB64-4902-B9FE-FEF5695DE31B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2AABE925-B962-44A8-9C22-5661CFDF3739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2AABE925-B962-44A8-9C22-5661CFDF3739}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2AABE925-B962-44A8-9C22-5661CFDF3739}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2AABE925-B962-44A8-9C22-5661CFDF3739}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

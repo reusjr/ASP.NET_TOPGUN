@@ -11,14 +11,38 @@ using ASP.NET_Day2.Models.DAL;
 
 namespace ASP.NET_Day2.Controllers
 {
+    [Authorize]
     public class StudentsController : Controller
     {
         private SchoolContext db = new SchoolContext();
 
         // GET: Students
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return View(db.Students.ToList());
+            var students = db.Students.Select(s => s);
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                students = students.Where(s => s.LastName.Contains(searchString)
+                                       || s.FirstMidName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    students = students.OrderByDescending(s => s.LastName);
+                    break;
+                case "Date":
+                    students = students.OrderBy(s => s.EnrollmentDate);
+                    break;
+                case "date_desc":
+                    students = students.OrderByDescending(s => s.EnrollmentDate);
+                    break;
+                default:
+                    students = students.OrderBy(s => s.LastName);
+                    break;
+            }
+            return View(students.ToList());
         }
 
         // GET: Students/Details/5
@@ -123,6 +147,67 @@ namespace ASP.NET_Day2.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        //Create Partial View
+        [HttpGet]
+        public ActionResult CreatePartial()
+
+        {
+            return PartialView("_CreatePartialView");
+        }
+        [HttpPost]
+        public ActionResult CreatePartial(Student stu)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Students.Add(stu);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return PartialView("_CreatePartialView");
+        }
+        //Details partial View
+        [HttpGet]
+        public ActionResult DetailPartiview(int ID)
+        {
+            Student stu = db.Students.Find(ID);
+            if (stu == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView("_DetailPartiview", stu);
+        }
+        // Edit Partial View
+        [HttpGet]
+        public ActionResult EditPartilView(int ID)
+        {
+            Student stu = db.Students.Find(ID);
+            if (stu == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView("_EditPartilView", stu);
+        }
+        [HttpPost]
+        public ActionResult EditPartilView(Student stu)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(stu).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return PartialView("_EditPartilView");
+        }
+        // Delete Partial View
+        public ActionResult DeletePartialView(int id)
+        {
+
+            var stu = db.Students.Find(id);
+            db.Students.Remove(stu);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+
         }
     }
 }
